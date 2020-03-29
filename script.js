@@ -1,8 +1,8 @@
 const intro = {
   eng:`Analyse your personality using Barnum-Forer method. All it uses is the way you move the mouse.
-Just start moving the cursor around until the line disappears.`,
+Just start moving the cursor around until the line disappears. On mobile you can tap scren instead.`,
   ru: `Проанализируйте Вашу личность методом Барнума-Леви-Форера. Метод основан на анализе движений мыши. 
-  Водите курсором, пока линия не исчезнет.`
+  Водите курсором или касайтесь экрана телефона, пока линия не исчезнет.`
 };
 
 const lines = {
