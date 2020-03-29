@@ -38,12 +38,13 @@ const lines = {
 
 const restartText = {eng:"Restart", ru:"Заново"};
 
-const lang = window.location.hash == "#ru"?"ru":"eng";
+let lang = window.location.hash == "#ru"?"ru":"eng";
 
 window.onload = () => {
   let uiDiv = document.getElementById("ui");
   let barDiv = document.getElementById("bar");
   let restartButton = document.getElementById("restart");
+  let langButton = document.getElementById("lang");
 
   let move;
   const moveMax = 10000;
@@ -52,15 +53,14 @@ window.onload = () => {
     move = 0;
     uiDiv.innerHTML = intro[lang];
     restartButton.innerHTML = restartText[lang];
+    langButton.innerHTML = lang.toUpperCase();
     restartButton.style.display = "none";
     barDiv.style.width = "100%";
   }
 
-  restartButton.onclick = reset;
-
-  window.onmousemove = e => {
+  function onmove(dist){
     if (move < moveMax) {
-      move += Math.abs(e.movementX) + Math.abs(e.movementY);
+      move += dist;
       barDiv.style.width = 100 * (1 - move / moveMax) + "%";
       if (move >= moveMax) {
         let reading = lines[lang]
@@ -73,7 +73,27 @@ window.onload = () => {
         barDiv.style.width = 0;
       }
     }
+  }
+
+  restartButton.onclick = reset;
+
+  langButton.onclick = e => {
+    lang = lang=="ru"?"eng":"ru";
+    window.location.hash = lang=="ru"?"#ru":"";
+    reset();
+  }
+
+  window.onmousemove = e => {
+    onmove(Math.abs(e.movementX) + Math.abs(e.movementY))
   };
+
+  window.onmousedown = e => {
+    onmove(300);
+  }
+
+  ScreenOrientation.onchange = e => {
+    onmove(300);
+  }
 
   reset();
 };
